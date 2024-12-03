@@ -44,7 +44,7 @@ def solver(graph_mat, cutoff_time, rand_seed):
     for iteration in range(max_iter):
         elapsed=time.time()-start
         if elapsed>cutoff_time:
-            print(f"Stopping early after {elapsed:.2f} seconds.")
+            #print(f"Stopping early after {elapsed:.2f} seconds.")
             break
         
         temp_route=swap(res_route)
@@ -62,5 +62,5 @@ def solver(graph_mat, cutoff_time, rand_seed):
                 res_dist=temp_dist
         if(iteration%M==0):
             temp=temp*cooling_rate
-    print('Route: '+str(res_route)+', Distance: '+str(res_dist))
+    #print('Route: '+str(res_route)+', Distance: '+str(res_dist))
     return res_dist, res_route
