@@ -14,7 +14,7 @@ def swap(route):
     res[i], res[j]=res[j], res[i]
     return res
 
-def solver(graph_mat, cutoff_time=900, rand_seed=None):
+def solver(graph_mat, cutoff_time, rand_seed):
     
     k=1.5
     M=1000
