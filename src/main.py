@@ -21,7 +21,7 @@ parser.add_argument("-inst", type=str, required=True,
                     help="The filename of a dataset")
 parser.add_argument("-alg", type=str, required=True, choices=["BF","Approx","LS"],
                     help="Method to use: BF, Approx, or LS")
-parser.add_argument("-time", type=str, required=True,
+parser.add_argument("-time", type=str, required=False,
                     help="The cut-off time (in seconds)")
 parser.add_argument("-seed", type=int, required=False,
                     help="A random seed (optional, only needed for LS)")
@@ -35,7 +35,18 @@ if instance.endswith(".tsp"):
 input_file = instance + ".tsp"
 
 solver_type = args.alg
-cutoff_time = float(args.time)
+
+cutoff_time = float("inf")
+if solver_type == "BF" or solver_type == "LS":
+    if args.time == None:
+        print(f"Missing cut-off time for algorithm {solver_type}", file=sys.stderr)
+        exit(1)
+    cutoff_time = float(args.time)
+
+if solver_type == "LS":
+    if args.seed == None:
+        print(f"Missing random seed for algorithm {solver_type}", file=sys.stderr)
+        exit(1)
 rand_seed = args.seed
 
 
@@ -74,15 +85,11 @@ if solver_type == "BF":
     
 elif solver_type == "Approx":
     cost, route = approx_algo.solve(graph_mat)
-    output_file = f"{instance}_{solver_type}_{rand_seed}.sol"
+    output_file = f"{instance}_{solver_type}.sol"
     
 elif solver_type == "LS":
-    if rand_seed == None:
-        print("Missing random seed for Local Search", file=sys.stderr)
-        exit(1)
-    else:
-        cost, route = local_search.solve(graph_mat, cutoff_time, rand_seed)
-        output_file = f"{instance}_{solver_type}_{args.time}_{rand_seed}.sol"
+    cost, route = local_search.solve(graph_mat, cutoff_time, rand_seed)
+    output_file = f"{instance}_{solver_type}_{args.time}_{rand_seed}.sol"
 
 # convert indices in route to node ids in the input file
 route = [loc_ls[i][0] for i in route]
