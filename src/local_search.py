@@ -2,6 +2,13 @@
 a heuristic algorithm with no guarantees, but that is effective in practice.
 """
 
+import numpy as np
+import pandas as pd
+import random
+import math
+import time
+import os
+
 def dist(route, graph_mat):
     res=0
     for i in range(len(route)):
