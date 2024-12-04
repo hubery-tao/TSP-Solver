@@ -93,6 +93,8 @@ elif solver_type == "LS":
 
 # convert indices in route to node ids in the input file
 route = [loc_ls[i][0] for i in route]
+if route[0] != route[-1]:
+    route.append(route[0])
 
 # write the output file in the working directory
 with open(output_file, "w") as file:
