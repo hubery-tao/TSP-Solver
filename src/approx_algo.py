@@ -48,6 +48,7 @@ def solve(graph_mat):
             if cost >= min_cost:
                 break
         else:
+            cost += graph_mat[route[-1], route[0]]
             if cost < min_cost:
                 min_cost = cost
                 best_route = tuple(route)
