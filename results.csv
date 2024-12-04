@@ -1,0 +1,15 @@
+,Brute Force,,,,2-Approximation,,,,Local Search-Simulated Annealing,,
+Dataset,Time(s),Sol.Quality,Full Tour,Rel Err,Time(s),Sol.Quallity,Full Tour,Rel Err,Time(s),Sol.Quality,Full Tour
+Atlanta.tsp,900,2034195,No,1.52%,1.9517E-04,2314410,Yes,15.50%,900,2003763,No
+Berlin.tsp,900,9124,No,9.03%,1.0040E-03,9794,Yes,17.04%,900,8368,No
+Boston.tsp,900,1006492,No,9.40%,6.0333E-04,1089714,Yes,18.45%,900,920007,No
+Champaign.tsp,900,55948,No,2.33%,1.0901E-03,64529,Yes,18.02%,900,54676,No
+Cincinnati.tsp,900,277952,Yes,0.00%,5.5833E-05,290257,Yes,4.43%,900,277952,Yes
+"Denver,tsp",900,115551,No,9.50%,2.8796E-03,123680,Yes,17.20%,900,105530,No
+NYC.tsp,900,1784453,No,6.86%,2.2778E-03,1972735,Yes,18.13%,900,1669947,No
+Philadelphia.tsp,900,1419453,No,1.68%,3.9817E-04,1515175,Yes,8.54%,900,1395981,No
+Roanoke.tsp,900,834230,No,-20.34%,2.1825E-02,789717,Yes,-24.59%,900,1047195,No
+SanFrancisco.tsp,900,1045182,No,8.15%,3.8399E-03,1092009,Yes,12.99%,900,966434,No
+Toronto.tsp,900,1369024,No,-21.58%,4.5555E-03,1520072,Yes,-12.92%,900,1745650,No
+UKansasState.tsp,900,62962,Yes,0.00%,4.8750E-05,66529,Yes,5.67%,900,62962,Yes
+UMissouri.tsp,900,164593,No,-1.07%,5.3650E-03,157926,Yes,-5.08%,900,166371,No
