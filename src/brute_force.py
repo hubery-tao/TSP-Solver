@@ -6,7 +6,6 @@ import heapq
 import numpy as np
 from time import perf_counter
 
-import approx_algo
 
 class Node:
     def __init__(self, path, cost, bound, level):
@@ -29,7 +28,7 @@ def calculate_bound(graph_mat, current_path):
     sub_graph = graph_mat[np.ix_(list(remaining_nodes), list(remaining_nodes))]
 
     # Solve the sub-graph using the approximate algorithm
-    approx_cost, approx_route = approx_algo.solve(sub_graph)
+    approx_cost, approx_route = approx_algo(sub_graph)
     # Map sub_graph indices back to original node indices
     remaining_nodes = list(remaining_nodes)
     mapped_route = [remaining_nodes[i] for i in approx_route] if approx_route else []
@@ -113,6 +112,59 @@ def solve(graph_mat, cutoff_time):
             return backup_cost, backup_route
         else:
             # Return the approximate solution if no solution is found
-            approx_cost, approx_route = approx_algo.solve(graph_mat)
+            approx_cost, approx_route = approx_algo(graph_mat)
             mapped_route = approx_route + [approx_route[0]] if approx_route else []
             return approx_cost, mapped_route
+
+"""
+2-Approximation using MST
+"""
+import heapq
+def approx_algo(graph_mat):
+    num_nodes = len(graph_mat)
+    tree = [[] for i in range(num_nodes)]     # adjacency list
+    pq = []
+    for i in range(1, num_nodes):
+        heapq.heappush(pq, (graph_mat[0,i], 0, i))
+    visited = [False] * num_nodes
+    visited[0] = True
+    num_visited = 1
+    
+    while num_visited < num_nodes:
+        weight, prev, curr = heapq.heappop(pq)
+        if not visited[curr]:
+            tree[prev].append(curr)
+            tree[curr].append(prev)
+            visited[curr] = True
+            num_visited += 1
+            for neigh in range(num_nodes):
+                if not visited[neigh]:
+                    heapq.heappush(pq, (graph_mat[curr,neigh], curr, neigh))
+                
+    # starting from any node in the MST, 
+    # the depth-first serach will give a 2-approximation
+    # so pick the one with the minimum cost
+    min_cost = float("inf")
+    best_route = None
+    for root in range(num_nodes):
+        route = []
+        visited = [False] * num_nodes
+        stack = [root]
+        while stack:
+            curr = stack.pop()
+            route.append(curr)
+            visited[curr] = True
+            for neigh in tree[curr]:
+                if not visited[neigh]:
+                    stack.append(neigh)
+        cost = 0
+        for i in range(num_nodes-1):
+            cost += graph_mat[route[i], route[i+1]]
+            if cost >= min_cost:
+                break
+        else:
+            if cost < min_cost:
+                min_cost = cost
+                best_route = tuple(route)
+    
+    return min_cost, best_route
